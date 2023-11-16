@@ -1,14 +1,20 @@
 import styles from '../assets/css/shopItemPage.module.css';
 import {Header} from "./Header";
-import {useState} from "react";
+import {useContext, useState} from "react";
 import {useUpdateArray} from "../hooks/updateArrayHook/useUpdateArray";
 import {useLogger} from "../hooks/loggerHook/useLogger";
+import {ShopListContext} from "../App";
+import {useParams} from "react-router-dom";
 
 
 export const ShopItemPage = () => {
 
     const { newArray, setNewArrayValue } = useUpdateArray([]);
     const { setLoggerValue } = useLogger();
+    const { shopList } = useContext(ShopListContext);
+    const itemId = useParams();
+
+    const shopItem = shopList[itemId.page];
 
     const handleSubmit = (event) => {
         event.preventDefault()
@@ -26,7 +32,7 @@ export const ShopItemPage = () => {
         <>
             <Header />
             <div className={styles.page__body}>
-                <div className={styles.item__name}>Item Name</div>
+                <div className={styles.item__name}>{shopItem?.name} - {shopItem?.price} USD</div>
                 <div className={styles.item__image}>
                     <img src="https://picsum.photos/800/400" alt="Item image"/>
                 </div>
