@@ -3,6 +3,8 @@ import {Header} from "./components/Header";
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.bundle';
 import {ShopList} from "./components/ShopList";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {ShopItemPage} from "./components/ShopItemPage";
 function App() {
 
     const shopList = [
@@ -18,10 +20,13 @@ function App() {
     ]
 
     return (
-        <div className={styles.app}>
-            <Header />
-            <ShopList shopList={shopList} />
-        </div>
+        <BrowserRouter>
+            <Routes>
+                <Route path={'/'} element={<ShopList shopList={shopList} />} />
+                <Route path={'/shopItemPage'} element={<ShopItemPage />}/>
+            </Routes>
+
+        </BrowserRouter>
     );
 }
 
