@@ -1,11 +1,14 @@
 import styles from '../assets/css/shopItemPage.module.css';
 import {Header} from "./Header";
 import {useState} from "react";
+import {useUpdateArray} from "../hooks/updateArrayHook/useUpdateArray";
+import {useLogger} from "../hooks/loggerHook/useLogger";
 
 
 export const ShopItemPage = () => {
 
-    const [commentList, setCommentList] = useState([]);
+    const { newArray, setNewArrayValue } = useUpdateArray([]);
+    const { setLoggerValue } = useLogger();
 
     const handleSubmit = (event) => {
         event.preventDefault()
@@ -15,7 +18,8 @@ export const ShopItemPage = () => {
             comment: event.target.comment.value
         }
 
-        setCommentList((prevComm) => [comment, ...prevComm]);
+        setLoggerValue(comment);
+        setNewArrayValue(comment);
     }
 
     return (
@@ -32,16 +36,6 @@ export const ShopItemPage = () => {
                 </div>
 
                 <hr/>
-                <div className={styles.commentList}>
-                    {commentList.map((comm, idx) => {
-                        return (
-                            <div className={styles.comm__body}>
-                                <div style={{fontWeight:'bold'}}>{comm?.username}</div>
-                                <div>{comm?.comment}</div>
-                            </div>
-                        )
-                    })}
-                </div>
 
                 <div className={styles.comment__form}>
                     <h3>Comment Form</h3>
@@ -59,6 +53,20 @@ export const ShopItemPage = () => {
                         </div>
                     </form>
                 </div>
+
+                <div className={styles.commentList}>
+                    <h2>Comments List</h2>
+                    {newArray?.map((comm, idx) => {
+                        return (
+                            <div key={idx} className={styles.comm__body}>
+                                <div style={{fontWeight:'bold'}}>{comm?.username}</div>
+                                <div>{comm?.comment}</div>
+                            </div>
+                        )
+                    })}
+                </div>
+
+
             </div>
         </>
     )
