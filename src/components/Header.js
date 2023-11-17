@@ -1,5 +1,12 @@
+import {useState} from "react";
+import {AuthModal} from "./AuthModal";
+import {Dialog} from "./Dialog";
 
 export const Header = () => {
+
+    const [open, setOpen] = useState(false);
+    const [showMessage, setShowMessage] = useState(false);
+
     return (
         <header>
             <nav className="navbar navbar-expand-lg bg-dark-subtle">
@@ -19,10 +26,19 @@ export const Header = () => {
                             <li className="nav-item">
                                 <a className="nav-link" href="#">About us</a>
                             </li>
+                            <li className="nav-item">
+                                <a className="nav-link" onClick={()=>setOpen(true)} href="#">Authorization</a>
+                            </li>
+
+                            <li className="nav-item">
+                                <a className="nav-link" onClick={()=>setShowMessage(true)} href="#">ShowDialogWindow</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
             </nav>
+            <Dialog showMessage={showMessage} setShowMessage={setShowMessage}/>
+            <AuthModal open={open} setOpen={setOpen}/>
         </header>
     )
 }
